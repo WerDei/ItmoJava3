@@ -48,7 +48,8 @@ public abstract class TaleObject {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         // Combine a name and a list of nicknames and pick one of them at random
         String[] names = new String[nicknames.length + 1];
         names[0] = name;
