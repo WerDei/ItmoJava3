@@ -1,15 +1,8 @@
 package net.werdei.talelab;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class TaleObject {
-
-    public static Random random; //TODO
-
-    static
-    {
-        random = new Random();
-    }
 
     private String name;
     private String[] nicknames;
@@ -42,7 +35,7 @@ public abstract class TaleObject {
     {
         if(nicknames.length != 0)
         {
-            int name = random.nextInt(nicknames.length);
+            int name = ThreadLocalRandom.current().nextInt(nicknames.length);
             return nicknames[name];
         }
         else
@@ -63,11 +56,6 @@ public abstract class TaleObject {
             names[i + 1] = nicknames[i];
         }
 
-        return names[random.nextInt(names.length)];
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+        return names[ThreadLocalRandom.current().nextInt(names.length)];
     }
 }
