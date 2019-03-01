@@ -63,4 +63,9 @@ public class Human extends Creature{
     public void think(TaleObject about) {
         System.out.println(toString() + " понял(ла), что " + about.getNickname() + " - это " + about.getName());
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ armRight.hashCode() ^ armLeft.hashCode() ^ head.hashCode();
+    }
 }

@@ -7,7 +7,7 @@ public interface Place {
         switch (event)
         {
             case Wind:
-                System.out.println("Подул лёгкий верерок");
+                System.out.println("Подул лёгкий ветерок");
                 break;
             case Magic:
                 System.out.println("Что-то необычное произошло...");

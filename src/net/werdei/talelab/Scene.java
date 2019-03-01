@@ -8,7 +8,7 @@ public class Scene implements Place {
 
     public Scene()
     {
-        taleObjects = new ArrayList<TaleObject>();
+        taleObjects = new ArrayList<>();
     }
 
     @Override
@@ -31,5 +31,10 @@ public class Scene implements Place {
     @Override
     public String toString() {
         return "Эпизодическая Сцена";
+    }
+
+    @Override
+    public int hashCode() {
+        return taleObjects.hashCode();
     }
 }

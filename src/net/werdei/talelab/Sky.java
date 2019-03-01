@@ -45,4 +45,9 @@ public class Sky extends TaleObject implements Place {
             tObject.reactToEvent(event);
         }
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ taleObjects.hashCode();
+    }
 }

@@ -59,4 +59,14 @@ public abstract class TaleObject {
 
         return names[ThreadLocalRandom.current().nextInt(names.length)];
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() ^ getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.hashCode() == obj.hashCode();
+    }
 }

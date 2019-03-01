@@ -129,4 +129,18 @@ public class BodyPart {
         strength = Strength;
     }
 
+    @Override
+    public String toString() {
+        return name + ", принадлежащая " + owner.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() ^ Float.floatToIntBits(flexibility) ^ Float.floatToIntBits(strength);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.hashCode() == obj.hashCode();
+    }
 }
