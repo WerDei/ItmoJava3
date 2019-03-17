@@ -4,12 +4,81 @@ public class BodyPart {
 
     public enum AnimationMethod
     {
-        Touch,
-        Hit,
-        Twist,
-        Bend,
-        Straighten,
-        Push,
+        Touch(10, 10)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s дотронулся(лась) до %2$s своей %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) дотронуться до %2$s своей %3$s"; }
+                },
+        Hit(30, 30)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s ударил(а) %2$s своей %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) ударить %2$s своей %3$s"; }
+                },
+        Twist(50, 20)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s изогнул(а) свою %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) изогнуть %3$s"; }
+                },
+        Bend(10, 10)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s согнул(ла) свою %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) согнуть %3$s"; }
+                },
+        Straighten(30, 30)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s выпрямил(а) свою %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) выпрямить %3$s"; }
+                },
+        Push(20, 50)
+                {
+                    @Override
+                    protected String successLine() { return "%1$s толкнул(а) %2$s своей %3$s"; }
+
+                    @Override
+                    protected String failureLine() { return "%1$s не смог(ла) толкнуть %2$s своей %3$s"; }
+                };
+
+        public float neededFlexibility;
+        public float neededStrength;
+
+        AnimationMethod(float flexibility, float strength)
+        {
+            neededFlexibility = flexibility;
+            neededStrength = strength;
+        }
+
+        public boolean performAction(BodyPart part, String targetName)
+        {
+            if (part.flexibility >= neededFlexibility && part.strength >= neededStrength)
+            {
+                System.out.println(String.format(successLine(), part.owner.toString(), targetName, part.name));
+                return true;
+            }
+            else
+            {
+                System.out.println(String.format(failureLine(), part.owner.toString(), targetName, part.name));
+                return false;
+            }
+        }
+
+        protected abstract String successLine();
+
+        protected abstract String failureLine();
     }
 
     private String name;
@@ -37,91 +106,19 @@ public class BodyPart {
 
     public boolean animate(AnimationMethod method)
     {
-        return animate(method, "себя");
+        return method.performAction(this, "себя");
     }
 
     public boolean animate(AnimationMethod method, TaleObject interactWith)
     {
-        return animate(method, interactWith.getName());
+        return method.performAction(this, interactWith.toString());
     }
 
     public boolean animate(AnimationMethod method, BodyPart interactWith)
     {
-        return animate(method, interactWith.name);
+        return method.performAction(this, interactWith.name);
     }
 
-    private boolean animate(AnimationMethod method, String interactWithName)
-    {
-        switch (method)
-        {
-            case Hit:
-                if (strength >= 30) {
-                    System.out.println(owner.toString() + " ударил(а) " + interactWithName + " своей " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не смог(ла) ударить " + interactWithName + " своей " + name);
-                    return false;
-                }
-
-            case Bend:
-                if (flexibility >= 10) {
-                    System.out.println(owner.toString() + " согнул(а) свою " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не согнул(а) " + name);
-                    return false;
-                }
-
-            case Push:
-                if (strength >= 50) {
-                    System.out.println(owner.toString() + " толкнул(а) " + interactWithName + " своей " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не смог(ла) толкнуть " + interactWithName + " своей " + name);
-                    return false;
-                }
-
-            case Touch:
-                if (flexibility >= 10) {
-                    System.out.println(owner.toString() + " дотронулся(лась) до " + interactWithName + " своей " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не смог(ла) дотронуться до " + interactWithName + " своей " + name);
-                    return false;
-                }
-
-            case Twist:
-                if (flexibility >= 50) {
-                    System.out.println(owner.toString() + " изогнул(а) " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не смог(ла) изогнуть) " + name);
-                    return false;
-                }
-
-            case Straighten:
-                if (flexibility >= 30) {
-                    System.out.println(owner.toString() + " выпрямил(а) " + name);
-                    return true;
-                }
-                else
-                {
-                    System.out.println(owner.toString() + " не смог(ла) выпрямить " + name);
-                    return false;
-                }
-        }
-        return true;
-    }
 
     public void setStats(float Flexibility, float Strength)
     {

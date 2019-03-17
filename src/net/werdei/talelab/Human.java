@@ -34,10 +34,8 @@ public class Human extends Creature{
 
     public boolean armsTouchHead()
     {
-        boolean result;
-        result = armRight.animate(BodyPart.AnimationMethod.Touch, head);
-        result = result & armLeft.animate(BodyPart.AnimationMethod.Touch, head);
-        return result;
+        return armRight.animate(BodyPart.AnimationMethod.Touch, head)
+                & armLeft.animate(BodyPart.AnimationMethod.Touch, head);
     }
 
     public boolean headBend()
