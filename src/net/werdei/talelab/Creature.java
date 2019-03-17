@@ -1,5 +1,7 @@
 package net.werdei.talelab;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 public abstract class Creature extends TaleObject implements IntelligentObject{
 
     public enum MoveMethod
@@ -27,9 +29,9 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
 
     public boolean travelTo(Place location, MoveMethod method)
     {
+        String message = toString();
         if (canMove())
         {
-            String message = toString();
             switch (method)
             {
                 case Run:
@@ -57,7 +59,6 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
         }
         else
         {
-            String message = toString();
             switch (method)
             {
                 case Run:
@@ -91,8 +92,85 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
         }
         else
         {
-            System.out.printf(toString() + " не смог прогулятся");
+            System.out.println(toString() + " не смог прогулятся");
             return false;
+        }
+    }
+
+    public class BodyPart {
+
+        private String name;
+        // values from 0 to 100
+        private float flexibility;
+        private float strength;
+
+
+        public BodyPart(String Name)
+        {
+            this(Name, 35, 35);
+        }
+
+        public BodyPart(String Name, float Flexibility, float Strength)
+        {
+            name = Name;
+
+            flexibility = Flexibility;
+            strength = Strength;
+        }
+
+
+        public boolean animate(AnimationMethod method)
+        {
+            return method.performAction(this, "себя");
+        }
+
+        public boolean animate(AnimationMethod method, TaleObject interactWith)
+        {
+            return method.performAction(this, interactWith.toString());
+        }
+
+        public boolean animate(AnimationMethod method, BodyPart interactWith)
+        {
+            return method.performAction(this, interactWith.name);
+        }
+
+        public void setStats(float Flexibility, float Strength)
+        {
+            flexibility = Flexibility;
+            strength = Strength;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public String getOwnresName()
+        {
+            return Creature.this.toString();
+        }
+
+        public float getFlexibility() {
+            return flexibility;
+        }
+
+        public float getStrength() {
+            return strength;
+        }
+
+        @Override
+        public String toString() {
+            return name + ", принадлежащая " + Creature.this.toString();
+        }
+
+        @Override
+        public int hashCode() {
+            return name.hashCode() ^ Float.floatToIntBits(flexibility) ^ Float.floatToIntBits(strength);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return this.hashCode() == obj.hashCode();
         }
     }
 }

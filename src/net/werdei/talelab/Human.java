@@ -11,9 +11,9 @@ public class Human extends Creature{
     {
         super(Name, Location, Nicknames);
 
-        armRight = new BodyPart("правая рука", this);
-        armLeft = new BodyPart("левая рука", this);
-        head = new BodyPart("голова", this);
+        armRight = new BodyPart("правая рука");
+        armLeft = new BodyPart("левая рука");
+        head = new BodyPart("голова");
     }
 
 
@@ -34,18 +34,18 @@ public class Human extends Creature{
 
     public boolean armsTouchHead()
     {
-        return armRight.animate(BodyPart.AnimationMethod.Touch, head)
-                & armLeft.animate(BodyPart.AnimationMethod.Touch, head);
+        return armRight.animate(AnimationMethod.Touch, head)
+                & armLeft.animate(AnimationMethod.Touch, head);
     }
 
     public boolean headBend()
     {
-        return head.animate(BodyPart.AnimationMethod.Bend);
+        return head.animate(AnimationMethod.Bend);
     }
 
     public boolean headTwist()
     {
-        return head.animate(BodyPart.AnimationMethod.Twist);
+        return head.animate(AnimationMethod.Twist);
     }
 
 
