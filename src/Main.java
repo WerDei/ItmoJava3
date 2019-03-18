@@ -9,7 +9,7 @@ public class Main {
         Scene mainScene = new Scene();
 
         Forest forest = new Forest("Лес", mainScene, 15, "Под деревьями");
-        forest.growLeaves();
+        Forest.Leaves leaves = forest.growLeaves();
 
         Human alice = new Human("Алиса", forest, "Она", "Девочка") {
             @Override
@@ -27,9 +27,11 @@ public class Main {
         Place.CreateEvent(TaleEvent.Magic, mainScene);
         alice.travelTo(sky, Creature.MoveMethod.Teleport);
 
-        Place.CreateEvent(TaleEvent.Wind, mainScene);
-
         alice.armsTouchHead();
+
+        Place.CreateEvent(TaleEvent.Wind, mainScene);
+        alice.think(leaves);
+
         alice.headBend();
         alice.headTwist();
 

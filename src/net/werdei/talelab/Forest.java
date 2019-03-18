@@ -22,9 +22,9 @@ public class Forest extends TaleObject implements Place {
         return size;
     }
 
-    public void growLeaves()
+    public Leaves growLeaves()
     {
-        Leaves leaves = new Leaves("Листья", this, "Листва", "Зелёное море");
+        return new Leaves("Листья", this, "Листва", "Зелёное море");
     }
 
 
