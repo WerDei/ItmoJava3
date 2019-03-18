@@ -64,12 +64,12 @@ public enum AnimationMethod
     {
         if (part.getFlexibility() >= neededFlexibility && part.getStrength() >= neededStrength)
         {
-            System.out.println(String.format(successLine(), part.getOwnresName(), targetName, part.getName()));
+            System.out.println(String.format(successLine(), part.getOwnersName(), targetName, part.getName()));
             return true;
         }
         else
         {
-            System.out.println(String.format(failureLine(), part.getOwnresName(), targetName, part.getName()));
+            System.out.println(String.format(failureLine(), part.getOwnersName(), targetName, part.getName()));
             return false;
         }
     }

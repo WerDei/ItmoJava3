@@ -143,7 +143,7 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
             return name;
         }
 
-        public String getOwnresName()
+        public String getOwnersName()
         {
             return Creature.this.toString();
         }
