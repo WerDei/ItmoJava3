@@ -1,17 +1,26 @@
 package net.werdei.talelab;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public abstract class Creature extends TaleObject implements IntelligentObject{
 
     public enum MoveMethod
     {
-        Walk,
-        Run,
-        Dive,
-        Jump,
-        Teleport,
+        Walk("%1$s идёт в %2$s"),
+        Run("%1$s бежит в %2$s"),
+        Dive("%1$s ныряет в %2$s"),
+        Jump("%1$s прфгает в %2$s"),
+        Teleport("%1$s переносится в %2$s");
+
+        private String travelMessage;
+
+        MoveMethod(String message)
+        {
+            travelMessage = message;
+        }
     }
 
-    protected boolean immobilised = false;
+    protected boolean confused = false;
 
 
     public Creature(String Name, Place Location, String... Nicknames)
@@ -20,79 +29,53 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
     }
 
 
-    public boolean canMove()
+    public boolean canMove() throws CreatureCantMoveException
     {
-        return !immobilised;
+        if (confused)
+            throw new CreatureCantMoveException("в растерянности", 0.75f);
+        return true;
+    }
+
+    private void tryToRecover(float chance)
+    {
+        if (ThreadLocalRandom.current().nextFloat() <= chance)
+        {
+            System.out.println(toString() + "пришёл(ла) в себя");
+            confused = false;
+        }
     }
 
     public boolean travelTo(Place location, MoveMethod method)
     {
-        String message = toString();
-        if (canMove())
+        try
         {
-            switch (method)
-            {
-                case Run:
-                    message += " вбегает в ";
-                    break;
-                case Dive:
-                    message += " ныряет в ";
-                    break;
-                case Jump:
-                    message += " прыгает в ";
-                    break;
-                case Walk:
-                    message += " идёт в ";
-                    break;
-                case Teleport:
-                    message += " оказался(лась) в ";
-                    break;
-            }
-            message += location.toString();
-
-            System.out.println(message);
-
-            moveTo(location);
+            System.out.println(String.format(method.travelMessage, toString(), location.toString()));
+            canMove();
             return true;
         }
-        else
+        catch (CreatureCantMoveException e)
         {
-            switch (method)
-            {
-                case Run:
-                    message += " не вбежал(ла) в ";
-                    break;
-                case Dive:
-                    message += " не смог(ла) нырнуть в ";
-                    break;
-                case Jump:
-                    message += " не запрыгнул(ла) в ";
-                    break;
-                case Walk:
-                    message += " остановился(лась) на пути к ";
-                    break;
-                case Teleport:
-                    message += " не переместился(лась) в ";
-                    break;
-            }
-            message += location.toString();
+            System.out.println(toString() + " " + e.getMessage() + " и не может двигаться!");
+            tryToRecover(1 * e.getRecoverChance());
 
-            System.out.println(message);
             return false;
         }
     }
 
-    public boolean strall()
-    {
-        if (canMove()) {
+    public boolean strall() {
+        try
+        {
+            canMove();
             System.out.println(toString() + " гуляет по " + getLocation());
             return true;
         }
-        else
+        catch (CreatureCantMoveException e)
         {
-            System.out.println(toString() + " не смог прогулятся");
+            System.out.println(toString() + " " + e.getMessage() + " - он/она застыл(ла) на месте");
+            tryToRecover(0.5f * e.getRecoverChance());
             return false;
         }
+
     }
 
     public class BodyPart {

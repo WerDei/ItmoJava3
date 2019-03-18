@@ -28,7 +28,7 @@ public abstract class Human extends Creature{
     private void recoil()
     {
         System.out.println(toString() + " отпрянул(а)");
-        immobilised = true;
+        confused = true;
     }
 
 
