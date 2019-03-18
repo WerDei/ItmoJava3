@@ -1,7 +1,5 @@
 package net.werdei.talelab;
 
-import javax.sql.rowset.spi.SyncResolver;
-
 public abstract class Creature extends TaleObject implements IntelligentObject{
 
     public enum MoveMethod

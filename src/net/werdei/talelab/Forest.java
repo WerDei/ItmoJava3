@@ -22,6 +22,11 @@ public class Forest extends TaleObject implements Place {
         return size;
     }
 
+    public void growLeaves()
+    {
+        Leaves leaves = new Leaves("Листья", this, "Листва", "Зелёное море");
+    }
+
 
     @Override
     public void reactToEvent(TaleEvent event) {
@@ -49,5 +54,24 @@ public class Forest extends TaleObject implements Place {
     @Override
     public int hashCode() {
         return super.hashCode() ^ taleObjects.hashCode() ^ Float.floatToIntBits(size);
+    }
+
+    public static class Leaves extends TaleObject{
+
+        public Leaves(String Name, Place Location, String... Nicknames)
+        {
+            super(Name, Location, Nicknames);
+        }
+
+        void tremble()
+        {
+            System.out.println(this.toString() + " трепещет");
+        }
+
+        @Override
+        public void reactToEvent(TaleEvent event) {
+            if(event == TaleEvent.Wind)
+                tremble();
+        }
     }
 }

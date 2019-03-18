@@ -1,6 +1,6 @@
 package net.werdei.talelab;
 
-public class Human extends Creature{
+public abstract class Human extends Creature{
 
     private BodyPart armRight;
     private BodyPart armLeft;
@@ -55,11 +55,6 @@ public class Human extends Creature{
             transformation();
         else if (event == TaleEvent.LoudSound)
             recoil();
-    }
-
-    @Override
-    public void think(TaleObject about) {
-        System.out.println(toString() + " понял(ла), что " + about.getNickname() + " - это " + about.getName());
     }
 
     @Override

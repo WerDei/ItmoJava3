@@ -51,8 +51,8 @@ public enum AnimationMethod
                 protected String failureLine() { return "%1$s не смог(ла) толкнуть %2$s своей %3$s"; }
             };
 
-    public float neededFlexibility;
-    public float neededStrength;
+    private float neededFlexibility;
+    private float neededStrength;
 
     AnimationMethod(float flexibility, float strength)
     {

@@ -8,9 +8,15 @@ public class Main {
 
         Scene mainScene = new Scene();
 
-        Forest forest = new Forest("Лес", mainScene,15, "Под деревьями");
-        Leaves leaves = new Leaves("Листва", forest, "Зелёное море", "Зелень");
-        Human alice = new Human("Алиса", forest, "Она", "Девочка");
+        Forest forest = new Forest("Лес", mainScene, 15, "Под деревьями");
+        forest.growLeaves();
+
+        Human alice = new Human("Алиса", forest, "Она", "Девочка") {
+            @Override
+            public void think(TaleObject about) {
+                System.out.println(toString() + " понял(ла), что " + about.getNickname() + " - это " + about.getName());
+            }
+        };
 
         Sky sky = new Sky("Небо", mainScene, 5, "Облака");
 
