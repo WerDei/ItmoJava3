@@ -31,7 +31,7 @@ public abstract class TaleObject {
         return name;
     }
 
-    public String getNickname()
+    public String getNickname() throws ObjectHasNoNicknamesException
     {
         if(nicknames.length != 0)
         {
@@ -39,7 +39,7 @@ public abstract class TaleObject {
             return nicknames[name];
         }
         else
-            return name;
+            throw new ObjectHasNoNicknamesException();
     }
 
     public Place getLocation()

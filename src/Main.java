@@ -14,7 +14,10 @@ public class Main {
         Human alice = new Human("Алиса", forest, "Она", "Девочка") {
             @Override
             public void think(TaleObject about) {
-                System.out.println(toString() + " понял(ла), что " + about.getNickname() + " - это " + about.getName());
+                try {
+                    System.out.println(toString() + " понял(ла), что " + about.getNickname() + " - это " + about.getName());
+                }
+                catch (ObjectHasNoNicknamesException e) {}
             }
         };
 
