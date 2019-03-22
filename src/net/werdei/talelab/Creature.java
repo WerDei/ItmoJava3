@@ -18,6 +18,11 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
         {
             travelMessage = message;
         }
+
+        public String getTravelMessage()
+        {
+            return travelMessage;
+        }
     }
 
     protected boolean confused = false;
@@ -40,7 +45,7 @@ public abstract class Creature extends TaleObject implements IntelligentObject{
     {
         if (ThreadLocalRandom.current().nextFloat() <= chance)
         {
-            System.out.println(toString() + "пришёл(ла) в себя");
+            System.out.println(toString() + " пришёл(ла) в себя");
             confused = false;
         }
     }
